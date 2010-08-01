@@ -2,7 +2,7 @@
 #timer_bar{	
 	float: left;
 	height: 50px;
-	width: 60%;
+	width: 750px;
 	background-color: #FF3B52;
 }
 body{
@@ -74,9 +74,8 @@ var timer = new Timer(25);
 
 function timerCountdown(){
 	timer.decrement(1);
-    $('#timer_bar').html(timer.timeLeft);
     var start = parseInt( $('#timer_bar').css('width'));
-     $('#timer_bar').css('width', start - 20 + 'px');
+     $('#timer_bar').css('width', start - 25 + 'px');
 }
 
 $(function(){
