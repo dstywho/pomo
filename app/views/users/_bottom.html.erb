@@ -1,0 +1,46 @@
+<style>
+	#tasks{
+		list-style-type:none;
+	}
+	#addAdditional span{
+		height:100px;
+		width:200px;
+		border: 1px solid pink;
+	}
+    #addAdditional div{
+		height:100px;
+		width:200px;
+		border: 1px solid pink;
+	}
+	#tasks li{
+		width:200px;
+		border:1px solid pink;
+	}
+</style>
+
+<script>
+	function expandList(jqueryList){
+		var listItem = jqueryList.find('li:eq(0)');
+		    var newItem = jQuery("<li></li>").appendTo(jqueryList);
+			newItem.append(listItem.html());
+	}
+
+
+
+jQuery(document).ready(function(){main();});
+
+function main(){
+	jQuery('#addAdditional').click(function(){
+		expandList(jQuery('#tasks'));
+		return false;
+	});
+	jQuery('#tasks').sortable();
+}
+	
+</script>
+<h1> smelly </h1>
+
+<a href="#" id="addAdditional"><div>plus button</div></a>
+<ul id="tasks">
+	<li><a href='#' class="remove">delete</a><input type="text"></li>
+</ul>
