@@ -1,21 +1,60 @@
 <style type="text/css" media="screen">
 #timer_bar{	
-	height: 40px;
-	width: 500px;
+	float: left;
+	height: 50px;
+	width: 60%;
 	background-color: #FF3B52;
 }
-
-body {
-	background-color: #4C3D2C;
+body{
+	background-color: white;
+	margin: 0;
+	padding: 0;
 }
-a#25_work{
+#main {
+	background-color: #4C3D2C;
+	margin: 0 3%;
+	padding: 20px;
+}
+.clear{
+	clear:both;
+}
+#timer_buttons{
+	width: 230px;
+	float:left;
+}
+a{
+	text-decoration: none;
+}
+span.button{
+	font-size:20px;
+	font-weight: bold;
+
+	padding-bottom: 0px;
+	text-align: center;
+}
+span.button a{
+	position: relative;
+	top: 15px;
+	color:black;
+}
+span.button a:hover{
+	color:white;
+}
+#work_25{
 	background-color: #F43644;
 }
-a#25_work{
+#break_5{
 	background-color: #A2E05E;
 }
-a#25_work{
+#break_25{
 	background-color: #87BF70;
+}
+#timer_buttons span{
+	height: 50px;
+	width: 50px;
+	display: block;
+	float:left;
+	margin: 0 10px;
 }
 </style>
 <script>
@@ -25,7 +64,9 @@ function Timer(time){
 	this.timeLeft = time;
 }
 Timer.prototype.decrement = function(seconds){
-	this.timeLeft -= seconds;	
+	if (this.timeLeft > 0){
+		this.timeLeft -= seconds;
+	}	
 }
 
 
@@ -46,11 +87,24 @@ $(function(){
 });
 
 </script>
-<div id="timer_bar">
+
+<div>
+	<span id="timer_buttons">
+	   <span class="button" id="work_25"><a href="#"> 25</a></span>
+	   <span class="button" id="break_5"><a href="#"> 5 </a></span>
+	   <span class="button" id="break_25"><a href="#">25</a></span>
+	</span>
+	<span id="timer_bar">
 	
+	</span>
+	
+	<div class="clear">
+		
+	</div>
 </div>
 
 
+<<<<<<< HEAD
 <div id="timer_buttons">
 	<a href="#" id="25_work">25</a>
 	<a href="#" id="5_break">5</a>
@@ -58,3 +112,6 @@ $(function(){
 </div>
 
 <%= render :partial => 'bottom' %>
+=======
+
+>>>>>>> 021191c105bae756fb761909652039979d0c75d4
