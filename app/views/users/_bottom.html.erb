@@ -34,6 +34,14 @@ function main(){
 		expandList(jQuery('#tasks'));
 		return false;
 	});
+	
+	jQuery('#tasks .remove').live('click', function(){ 
+	    var ul = jQuery(this).parents('ul');
+		if ($(ul).find('li').length > 1) {
+			var parentItem = jQuery(this).parent('li');
+			jQuery(parentItem).remove();
+		}
+	});
 	jQuery('#tasks').sortable();
 }
 	
