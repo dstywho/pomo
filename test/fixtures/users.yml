@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  age: 1
+  favorite_color: MyString
+  birthdate: 2010-07-31
+  start_date: 2010-07-31 14:23:10
+
+two:
+  name: MyString
+  age: 1
+  favorite_color: MyString
+  birthdate: 2010-07-31
+  start_date: 2010-07-31 14:23:10

@@ -1,0 +1,58 @@
+<style type="text/css" media="screen">
+#timer_bar{	
+	height: 40px;
+	width: 500px;
+	background-color: #FF3B52;
+}
+
+body {
+	background-color: #4C3D2C;
+}
+a#25_work{
+	background-color: #F43644;
+}
+a#25_work{
+	background-color: #A2E05E;
+}
+a#25_work{
+	background-color: #87BF70;
+}
+</style>
+<script>
+
+// TImer class
+function Timer(time){
+	this.timeLeft = time;
+}
+Timer.prototype.decrement = function(seconds){
+	this.timeLeft -= seconds;	
+}
+
+
+var timer = new Timer(25);
+
+function timerCountdown(){
+	timer.decrement(1);
+    $('#timer_bar').html(timer.timeLeft);
+    var start = parseInt( $('#timer_bar').css('width'));
+     $('#timer_bar').css('width', start - 20 + 'px');
+}
+
+$(function(){
+	$('a').click(function(){
+		setInterval('timerCountdown()', 1000);
+		return false;
+	});
+});
+
+</script>
+<div id="timer_bar">
+	
+</div>
+
+
+<div id="timer_buttons">
+	<a href="#" id="25_work">25</a>
+	<a href="#" id="5_break">5</a>
+	<a href="#" id="25_break">25</a>
+</div>
