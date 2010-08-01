@@ -1,8 +1,11 @@
 <style type="text/css" media="screen">
+*{
+	font-size:20px;
+}
 #timer_bar{	
 	float: left;
 	height: 50px;
-	width: 750px;
+	width: 700px;
 	background-color: #FF3B52;
 }
 body{
@@ -11,6 +14,7 @@ body{
 	padding: 0;
 }
 #main {
+	color: white;
 	background-color: #4C3D2C;
 	margin: 0 3%;
 	padding: 20px;
@@ -26,7 +30,6 @@ a{
 	text-decoration: none;
 }
 span.button{
-	font-size:20px;
 	font-weight: bold;
 
 	padding-bottom: 0px;
@@ -40,15 +43,10 @@ span.button a{
 span.button a:hover{
 	color:white;
 }
-#work_25{
-	background-color: #F43644;
-}
-#break_5{
-	background-color: #A2E05E;
-}
-#break_25{
-	background-color: #87BF70;
-}
+#work_25{background-color: #F43644;}
+#break_5{background-color: #A2E05E;}
+#break_25{background-color: #87BF70;}
+
 #timer_buttons span{
 	height: 50px;
 	width: 50px;
@@ -56,7 +54,17 @@ span.button a:hover{
 	float:left;
 	margin: 0 10px;
 }
+#timer_bar span{top: 35px;}
+
+#five{position:absolute; left:425px;}
+#ten{position:absolute; left:565px;}
+#fifteen{position:absolute; left:705px;}
+#twenty{position:absolute; left:845px;}
 </style>
+
+
+
+
 <script>
 
 // TImer class
@@ -75,14 +83,23 @@ var timer = new Timer(25);
 function timerCountdown(){
 	timer.decrement(1);
     var start = parseInt( $('#timer_bar').css('width'));
-     $('#timer_bar').css('width', start - 25 + 'px');
+     $('#timer_bar').css('width', start - 30 + 'px');
 }
 
 $(function(){
-	$('a').click(function(){
-		setInterval('timerCountdown()', 1000);
-		return false;
+
+	$('#timer_buttons a').each( function(index, element){
+		var elId = $(element).parent().attr('id');
+		var underscorePosition = elId.indexOf('_');
+		var timerAmount = elId.substr(underscorePosition + 1, elId.length);
+
+		$(element).click(function(){
+			$('#timer_bar').css('width', parseInt(timerAmount) * 30 + 'px' );
+			setInterval('timerCountdown()', 1000);
+			return false;
+		});
 	});
+
 });
 
 </script>
@@ -94,7 +111,10 @@ $(function(){
 	   <span class="button" id="break_25"><a href="#">25</a></span>
 	</span>
 	<span id="timer_bar">
-	
+		<span id="five">5</span>
+		<span id="ten">10</span>
+		<span id="fifteen">15</span>
+		<span id="twenty">20</span>
 	</span>
 	
 	<div class="clear">
