@@ -1,54 +1,162 @@
 <style>
-	#tasks{
-		list-style-type:none;
+    #tasks {
+        list-style-type: none;
+    }
+    
+    
+    #addAdditional div {
+        height: 100px;
+        width: 200px;
+        border: 1px solid pink;
+    }
+    
+    #tasks li {
+        width: 700px;
+		height: 50px;
+        border: 1px solid pink;
+		clear:both;
+    }
+	
+	#tasks > li > *{
+		float:left;
 	}
-	#addAdditional span{
-		height:100px;
-		width:200px;
-		border: 1px solid pink;
-	}
-    #addAdditional div{
-		height:100px;
-		width:200px;
-		border: 1px solid pink;
-	}
-	#tasks li{
-		width:200px;
-		border:1px solid pink;
+	#tasks a.toggle div{
+		float:left;
+		width:40px;
+		height:40px;
+		text-decoration: none;
+		color:white;
+		font-face:bold;
+		font-size:26pt;
 	}
 </style>
-
 <script>
-	function expandList(jqueryList){
-		var listItem = jqueryList.find('li:eq(0)');
-		    var newItem = jQuery("<li></li>").appendTo(jqueryList);
-			newItem.append(listItem.html());
+    function expandList(jqueryList){
+        var listItem = jqueryList.find('li:eq(0)');
+        var newItem = jQuery("<li></li>")
+        newItem.append(listItem.html());
+		newItem.appendTo(jqueryList);
+		newItem.find('a.toggle').each(function(){
+				new Toggle(jQuery(this), null).init();
+		});
+		
+    }
+    
+    
+    
+    jQuery(document).ready(function(){
+        main();
+    });
+    
+    
+    
+    ToggleStateMachine.ToggleStates = {
+        INIT: 0,
+        DISTRACTION: 1,
+        FAILED: 2,
+        COMPLETE: 3
+    }
+    function ToggleStateMachine(state){
+        if (state == null) {
+            this.state = ToggleStateMachine.ToggleStates.INIT;
+        }
+        else {
+            this.state = state;
+        }
+    }
+    
+    ToggleStateMachine.prototype.transition = function(){
+        switch (this.state) {
+            case ToggleStateMachine.ToggleStates.INIT:
+                this.state = ToggleStateMachine.ToggleStates.DISTRACTION;
+                break;
+                
+            case ToggleStateMachine.ToggleStates.DISTRACTION:
+                this.state = ToggleStateMachine.ToggleStates.FAILED;
+                break;
+                
+            case ToggleStateMachine.ToggleStates.FAILED:
+                this.state = ToggleStateMachine.ToggleStates.COMPLETE;
+                break;
+                
+            case ToggleStateMachine.ToggleStates.COMPLETE:
+                this.state = ToggleStateMachine.ToggleStates.INIT;
+                break;
+        }
+    }
+    
+    ToggleStateMachine.prototype.character = function(){
+        switch (this.state) {
+            case ToggleStateMachine.ToggleStates.INIT:
+                return ".";
+            case ToggleStateMachine.ToggleStates.DISTRACTION:
+                return "'";
+            case ToggleStateMachine.ToggleStates.FAILED:
+                return "-";
+            case ToggleStateMachine.ToggleStates.COMPLETE:
+                return "X";
+        }
+        
+    }
+    
+    function Toggle(jqueryAnchor, state){
+        this.anchorObj = jqueryAnchor;
+        this.stateMachine = new ToggleStateMachine(state);
+    }
+	Toggle.prototype.init = function(){
+		var mytoggle = this;
+		this.setChar();		
+		this.anchorObj.click(function(){
+			mytoggle.transition();
+			return false;
+		});
 	}
-
-
-
-jQuery(document).ready(function(){main();});
-
-function main(){
-	jQuery('#addAdditional').click(function(){
-		expandList(jQuery('#tasks'));
-		return false;
-	});
-	
-	jQuery('#tasks .remove').live('click', function(){ 
-	    var ul = jQuery(this).parents('ul');
-		if ($(ul).find('li').length > 1) {
-			var parentItem = jQuery(this).parent('li');
-			jQuery(parentItem).remove();
-		}
-	});
-	jQuery('#tasks').sortable();
-}
-	
+	Toggle.prototype.setChar = function(){
+		var span = this.anchorObj.find('div');
+		jQuery(span).html(this.stateMachine.character());
+	}
+	Toggle.prototype.transition = function(){
+		this.stateMachine.transition();
+		this.setChar();
+	}
+    
+    
+    function main(){
+        
+        jQuery('#addAdditional').click(function(){
+            expandList(jQuery('#tasks'));
+            return false;
+        });
+        
+        jQuery('#tasks .remove').live('click', function(){
+            var ul = jQuery(this).parents('ul');
+            if ($(ul).find('li').length > 1) {
+                var parentItem = jQuery(this).parent('li');
+                jQuery(parentItem).remove();
+            }
+        });
+        
+        
+        jQuery('#tasks a.toggle').each(function(){
+			new Toggle(jQuery(this), null).init();
+		});
+			        
+        jQuery('#tasks').sortable();
+    }
+    
 </script>
 <h1> smelly </h1>
-
-<a href="#" id="addAdditional"><div>plus button</div></a>
+<a href="#" id="addAdditional">
+    <div>
+        plus button
+    </div>
+</a>
 <ul id="tasks">
-	<li><a href='#' class="remove">delete</a><input type="text"></li>
+    <li>
+        <a href='#' class="remove">delete</a>
+        <input type="text">
+		<% 10.times do |index| %>
+        	<a class="toggle" href="#"><div></div></a>
+        <% end %>
+    </li>
 </ul>
